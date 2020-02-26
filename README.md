@@ -22,8 +22,11 @@ While developing the challenge you can point the network requests to the control
   
 With the following controllers/providers:
 
+
   controllers/createTask.jsp
+  
   controlelrs/updateTask.jsp
+  
   providers/getTasks.jsp
   
 ### Bonus
@@ -34,8 +37,13 @@ As a bonus you can add a component to the app that displays the task and its des
 
 if you have any questions please email me, use the subject "Developer Challenge" 
 
+
 Thanks
+
 Ben Wood
+
 bwood@campbellcompanies.com
+
 Web Development Manager
+
 Campbell Companies
