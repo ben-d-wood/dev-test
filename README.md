@@ -1,6 +1,6 @@
 # Junior Developer Challenge
 
-In this repository I have created a simple todo app. Parts of the app are finished and some parts are left unfinished. I have added comments in the code to indicate where work needs to be done.
+In this repository I have created a simple todo app. The app is written using the [Polymer 1.0 library](https://polymer-library.polymer-project.org/1.0/docs/devguide/feature-overview). Parts of the app are finished and some parts are left unfinished. I have added comments in the code to indicate where work needs to be done.
 
 ## Database
 
