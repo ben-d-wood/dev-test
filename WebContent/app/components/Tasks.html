@@ -5,7 +5,13 @@
 
 <dom-module id="dev-tasks">
 	<style>
-
+		#panel{
+			margin-top:20px;
+			height:50vh;
+		}
+		.panel{
+			height: 100%;
+		}
 	</style>
 	<template>
 		<!-- Usually this would point to the provider/controller however we are  -->
@@ -16,9 +22,18 @@
     		on-response="getTasksResponse"
     		debounce-duration="300"
 		></iron-ajax>
-		<template is="dom-repeat" items="{{tasks}}" as="task">
-			<dev-task task="{{task}}"></dev-task>
-		</template>
+		<div id="panel" class="col-md-6 col-md-offset-2"> 
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">Tasks</h3>
+			  </div>
+			  <div class="panel-body">
+				<template is="dom-repeat" items="{{tasks}}" as="task">
+					<dev-task task="{{task}}"></dev-task>
+				</template>			    
+			  </div>
+			</div>
+		</div>		
 	</template>
 
     <script>

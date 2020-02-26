@@ -17,6 +17,8 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.12.0",
-    "iron-ajax": "PolymerElements/iron-ajax#^1.4.4"
+    "iron-ajax": "PolymerElements/iron-ajax#^1.4.4",
+    "app-route": "PolymerElements/app-route#^1.0.1",
+    "iron-pages": "PolymerElements/iron-pages#^1.0.9"
   }
 }

@@ -1,4 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html"/>
 
 <link rel="import" href="Tasks.html">
 
@@ -14,16 +17,11 @@
 	</style>
 
 	<template> 
-		<div id="panel" class="col-md-6 col-md-offset-2"> 
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-			    <h3 class="panel-title">Tasks</h3>
-			  </div>
-			  <div class="panel-body">
-			    <dev-tasks></dev-tasks>
-			  </div>
-			</div>
-		</div>
+		<app-location route="{{route}}" use-hash-as-path></app-location>
+		<app-route route="{{route}}" data="{{data}}" tail="{{subRoute}}" pattern="/:page"></app-route>
+		<iron-pages id="views" selected="{{data.page}}" attr-for-selected="id" fallback-selection="tasks">
+			<dev-tasks id="tasks"></dev-tasks>
+		</iron-pages>
 	</template>
 
     <script>
