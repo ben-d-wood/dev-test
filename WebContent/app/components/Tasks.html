@@ -1,0 +1,33 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<link rel="import" href="Task.html">
+
+<dom-module id="dev-tasks">
+	<style>
+
+	</style>
+	<template>
+		<!-- Usually this would point to the provider/controller however we are  -->
+		<!-- calling and external api today for funsies -->
+		<iron-ajax auto			
+			url="https://mywheeler.net/test/TaskManager/app/providers/getTasks.jsp"
+    		handle-as="json"
+    		on-response="getTasksResponse"
+    		debounce-duration="300"
+		></iron-ajax>
+		<template is="dom-repeat" items="{{tasks}}" as="task">
+			<dev-task task="{{task}}"></dev-task>
+		</template>
+	</template>
+
+    <script>
+	    Polymer({
+	        is: 'dev-tasks',
+	        getTasksResponse:function(request){
+	        	var response = request.detail.response;
+	        	this.set("tasks", response.rows);
+	        }
+	    });
+    </script>
+</dom-module>

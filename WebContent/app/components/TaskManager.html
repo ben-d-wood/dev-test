@@ -1,0 +1,34 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="Tasks.html">
+
+<dom-module id="dev-task-manager">
+	<style>
+		#panel{
+			margin-top:20px;
+			height:50vh;
+		}
+		.panel{
+			height: 100%;
+		}
+	</style>
+
+	<template> 
+		<div id="panel" class="col-md-6 col-md-offset-2"> 
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">Tasks</h3>
+			  </div>
+			  <div class="panel-body">
+			    <dev-tasks></dev-tasks>
+			  </div>
+			</div>
+		</div>
+	</template>
+
+    <script>
+	    Polymer({
+	        is: 'dev-task-manager'
+	    });
+    </script>
+</dom-module>

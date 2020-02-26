@@ -1,0 +1,22 @@
+{
+  "name": "Task Manager",
+  "description": "A simple todo list application",
+  "main": "index.html",
+  "authors": [
+    "Ben Wood"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.12.0",
+    "iron-ajax": "PolymerElements/iron-ajax#^1.4.4"
+  }
+}

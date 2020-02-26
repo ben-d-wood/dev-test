@@ -1,0 +1,35 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="dev-menu">
+	<style>
+		nav{
+			background-color: #bbb;
+			height: calc(100vh - 120px);
+			padding-top:10px;
+		}
+	</style>
+	<template>
+		<nav>
+			<div class="col-xs-12">
+				<button class="btn btn-lg btn-block" on-tap="addTask">Add Task</button>
+			</div>
+		</nav>
+	</template>
+
+    <script>
+	    Polymer({
+	        is: 'dev-menu',
+	        addTask:function(){
+	        	bootbox.prompt("Enter the name of this Task:", function(result){
+	        		console.log(result);
+	        		// Add code here to submit the task to the backend
+	        	});
+
+	        	// fixes issue with bootbox overlay causing text boxes to be covered
+	        	window.setTimeout(function(){
+	        		$(".bootbox").removeAttr("tabIndex");
+	        	}, 200);
+	        }
+	    });
+    </script>
+</dom-module>

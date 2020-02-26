@@ -1,0 +1,26 @@
+<! DOCTYPE html>
+<html>
+	<head>
+		<title>Task Manager</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/app.css">
+
+		<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/bootbox.min.js"></script>
+
+		<script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+
+		<link rel="import" href="app/components/Application.html"/>
+		<link rel="import" href="app/components/Menu.html"/>
+		<link rel="import" href="app/components/TaskManager.html"/> 
+	</head>
+	<body>
+		
+		<dev-application name="Task Manager" path="IT/Tasks">
+			<dev-menu class="nav-left"></dev-menu>
+			<dev-task-manager class="app-content"></dev-task-manager>
+		</dev-application>
+
+	</body>
+</html>
