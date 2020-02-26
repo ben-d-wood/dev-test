@@ -25,7 +25,7 @@ With the following controllers/providers:
 
   controllers/createTask.jsp
   
-  controlelrs/updateTask.jsp
+  controllers/updateTask.jsp
   
   providers/getTasks.jsp
   
