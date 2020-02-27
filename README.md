@@ -25,11 +25,11 @@ While developing the challenge you can point the network requests to the control
 With the following controllers/providers:
 
 
-  controllers/createTask.jsp
+  app/controllers/createTask.jsp
   
-  controllers/updateTask.jsp
+  app/controllers/updateTask.jsp
   
-  providers/getTasks.jsp
+  app/providers/getTasks.jsp
   
 ### Bonus
 
