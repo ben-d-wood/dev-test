@@ -2,7 +2,7 @@
 
 In this repository I have created a simple todo app. The app is written using the [Polymer 1.0 library](https://polymer-library.polymer-project.org/1.0/docs/devguide/feature-overview). Parts of the app are finished and some parts are left unfinished. I have added comments in the code to indicate where work needs to be done.
 
-Fork this project and browse the code. make changes to the project and then when ready submit a pull request back to the original project with your solution. The deadline for the challenge is March 2nd, 2020 by 5:00pm Mountain Time.
+Fork this project and browse the code. make changes to the project and then when ready submit a pull request back to the original project with your solution. The deadline for the challenge is March 3rd, 2020 by 5:00pm Mountain Time.
 
 ## Database
 
