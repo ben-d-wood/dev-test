@@ -41,6 +41,7 @@
 	        is: 'dev-tasks',
 	        getTasksResponse:function(request){
 	        	var response = request.detail.response;
+				console.log(response)
 	        	this.set("tasks", response.rows);
 	        }
 	    });
