@@ -11,17 +11,19 @@
   <style></style>
   <template>
     <iron-ajax
-      auto
+      auto="false"
       url="https://mywheeler.net/test/Taskmanager/app/controllers/deleteTask.jsp"
       handle-as="json"
-      on-response="deleteTasksResponse"
+      method="DELETE"
+      request="deleteTasksRequest"
       debounce-duration="300"
     ></iron-ajax>
     <!-- <iron-ajax
-      auto
+      auto="false"
       url="https://mywheeler.net/test/Taskmanager/app/controllers/updateTask.jsp"
-      handle-as="json"
-      on-response="updateTasksResponse"
+	  handle-as="json"
+	  method="PUT"
+      request="updateTasksRequest"
       debounce-duration="300"
     ></iron-ajax> -->
     <li>{{task.name}}</li>
@@ -30,12 +32,12 @@
   <script>
     Polymer({
       is: "dev-task",
-      deleteTasksResponse: function(task_id) {
+      deleteTasksRequest: function(task_id) {
         console.log(task_id);
         //write a way to capture task_id and send to the api
       }
     });
-    //  updateTasksResponse: function(task_id){
+    //  updateTasksRequest: function(task_id){
     // 	console.log(task_id);
     // 	//polymer can't take two functions.... can i do two iron-ajax calls?
     // 	//write the update capture for task_id, name, completed, description
