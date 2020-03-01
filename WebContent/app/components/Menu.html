@@ -11,7 +11,9 @@
   <template>
     <nav>
       <div class="col-xs-12">
-        <button class="btn btn-lg btn-block" on-tap="addTask">Add Task</button>
+        <button class="btn btn-lg btn-block" on-tap="addTask" id="addTask">
+          Add Task
+        </button>
       </div>
     </nav>
   </template>
@@ -30,6 +32,12 @@
         window.setTimeout(function() {
           $(".bootbox").removeAttr("tabIndex");
         }, 200);
+      },
+      listeners: {
+        "addTask.tap": "addTap"
+      },
+      addTap: function(e) {
+        addTask();
       }
     });
   </script>
