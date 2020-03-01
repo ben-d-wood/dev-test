@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html" />
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html" />
 
 <!-- Add to this component the controls to update,and delete the task -->
 <!-- we would usually call controllers to do this work, however -->
@@ -9,15 +10,35 @@
 <dom-module id="dev-task">
   <style></style>
   <template>
+    <iron-ajax
+      auto
+      url="https://mywheeler.net/test/Taskmanager/app/controllers/deleteTask.jsp"
+      handle-as="json"
+      on-response="deleteTasksResponse"
+      debounce-duration="300"
+    ></iron-ajax>
+    <!-- <iron-ajax
+      auto
+      url="https://mywheeler.net/test/Taskmanager/app/controllers/updateTask.jsp"
+      handle-as="json"
+      on-response="updateTasksResponse"
+      debounce-duration="300"
+    ></iron-ajax> -->
     <li>{{task.name}}</li>
   </template>
 
   <script>
     Polymer({
       is: "dev-task",
-      properties: {
-        task: Object
+      deleteTasksResponse: function(task_id) {
+        console.log(task_id);
+        //write a way to capture task_id and send to the api
       }
     });
+    //  updateTasksResponse: function(task_id){
+    // 	console.log(task_id);
+    // 	//polymer can't take two functions.... can i do two iron-ajax calls?
+    // 	//write the update capture for task_id, name, completed, description
+    //  }
   </script>
 </dom-module>
