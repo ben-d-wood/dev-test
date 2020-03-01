@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html" />
 
 <!-- Add to this component the controls to update,and delete the task -->
 <!-- we would usually call controllers to do this work, however -->
@@ -7,19 +7,17 @@
 <!-- UPDATE: https://mywheeler.net/test/Taskmanager/app/controllers/updateTask.jsp -->
 <!-- each api takes a task_id, the update will also accept name, completed, and description -->
 <dom-module id="dev-task">
-	<style>
+  <style></style>
+  <template>
+    <li>{{task.name}}</li>
+  </template>
 
-	</style>
-	<template>
-		<li>{{task.name}}</li>
-	</template>
-
-    <script>
-	    Polymer({
-	        is: 'dev-task',
-	        properties:{
-	        	task:Object
-	        }
-	    });
-    </script>
+  <script>
+    Polymer({
+      is: "dev-task",
+      properties: {
+        task: Object
+      }
+    });
+  </script>
 </dom-module>
