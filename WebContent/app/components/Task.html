@@ -18,14 +18,14 @@
       request="deleteTasksRequest"
       debounce-duration="300"
     ></iron-ajax>
-    <!-- <iron-ajax
+    <iron-ajax
       auto="false"
       url="https://mywheeler.net/test/Taskmanager/app/controllers/updateTask.jsp"
-	  handle-as="json"
-	  method="PUT"
+      handle-as="json"
+      method="PUT"
       request="updateTasksRequest"
       debounce-duration="300"
-    ></iron-ajax> -->
+    ></iron-ajax>
     <li>{{task.name}}</li>
   </template>
 
@@ -35,12 +35,13 @@
       deleteTasksRequest: function(task_id) {
         console.log(task_id);
         //write a way to capture task_id and send to the api
+        // what event calls these functions?
+      },
+      updateTasksRequest: function(task_id) {
+        console.log(task_id);
+
+        //write the update capture for task_id, name, completed, description
       }
     });
-    //  updateTasksRequest: function(task_id){
-    // 	console.log(task_id);
-    // 	//polymer can't take two functions.... can i do two iron-ajax calls?
-    // 	//write the update capture for task_id, name, completed, description
-    //  }
   </script>
 </dom-module>

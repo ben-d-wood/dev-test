@@ -9,9 +9,17 @@
     }
   </style>
   <template>
+    <iron-ajax
+      auto="false"
+      url="../controllers/saveTask.jsp"
+      handle-as="json"
+      method="POST"
+      request="postTask"
+      debounce-duration="300"
+    ></iron-ajax>
     <nav>
       <div class="col-xs-12">
-        <button class="btn btn-lg btn-block" on-tap="addTask" id="addTask">
+        <button class="btn btn-lg btn-block" on-tap="addTask">
           Add Task
         </button>
       </div>
@@ -24,8 +32,19 @@
       addTask: function() {
         bootbox.prompt("Enter the name of this Task:", function(result) {
           console.log(result);
-          // Add code here to submit the task to the backend
           //This result needs to be added to the row array (name: result, description: "task added")
+          let json = {
+            name: result,
+            description: "task menu",
+            user: "Glen Larsen"
+          };
+          postTask = function(event) {
+            console.log("postTask function event:");
+            console.log(event);
+          };
+          // Add code here to submit the task to the backend
+          postTask(json);
+          // I want to do an axios call :'( so sad'
         });
 
         // fixes issue with bootbox overlay causing text boxes to be covered
@@ -35,9 +54,6 @@
       },
       listeners: {
         "addTask.tap": "addTap"
-      },
-      addTap: function(e) {
-        addTask();
       }
     });
   </script>

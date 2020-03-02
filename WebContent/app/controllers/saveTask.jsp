@@ -1,2 +1,2 @@
-INSERT INTO Test.guest.Tasks (name, description, user) VALUES ('dev-test',
-'dev-test save task controller', 'Glen Larsen')
+INSERT INTO Test.guest.Tasks (name, description, user) VALUES ('$1', '$2', 'Glen
+Larsen')
