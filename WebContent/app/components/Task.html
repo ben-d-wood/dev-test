@@ -8,7 +8,11 @@
 <!-- UPDATE: https://mywheeler.net/test/Taskmanager/app/controllers/updateTask.jsp -->
 <!-- each api takes a task_id, the update will also accept name, completed, and description -->
 <dom-module id="dev-task">
-  <style></style>
+  <style>
+    button {
+      padding: 0px 10px;
+    }
+  </style>
   <template>
     <iron-ajax
       auto="false"
@@ -26,7 +30,15 @@
       request="updateTasksRequest"
       debounce-duration="300"
     ></iron-ajax>
-    <li>{{task.name}}</li>
+    <li>
+      {{task.name}}
+      <button class="btn btn-lg btn-danger" on-tap="deleteTasksRequest">
+        Delete
+      </button>
+      <button class="btn btn-lg btn-warning" on-tap="updateTasksRequest">
+        Update
+      </button>
+    </li>
   </template>
 
   <script>
