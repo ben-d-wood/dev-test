@@ -1,5 +1,20 @@
 # Junior Developer Challenge
 
+
+## Summary
+
+In this challenge I used local storage because I wasn't able to consume or post to the api provided. I created the database under the "guest" schema as provided below. 
+
+[DEMO](https://youtu.be/W5-nfSR0V28)
+
+Screenshots inside folder screenshots.
+
+For any questions: my email is on my profile.
+
+Thank you!
+
+## Challenge
+
 In this repository I have created a simple todo app. The app is written using the [Polymer 1.0 library](https://polymer-library.polymer-project.org/1.0/docs/devguide/feature-overview). Parts of the app are finished and some parts are left unfinished. I have added comments in the code to indicate where work needs to be done.
 
 Fork this project and browse the code. make changes to the project and then when ready submit a pull request back to the original project with your solution. The deadline for the challenge is March 3rd, 2020 by 5:00pm Mountain Time.

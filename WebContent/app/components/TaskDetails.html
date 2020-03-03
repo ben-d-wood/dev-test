@@ -1,0 +1,190 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+
+<!-- Add to this component the controls to update,and delete the task -->
+<!-- we would usually call controllers to do this work, however -->
+<!-- use the following urls to hit our external API for this test -->
+<!-- DELETE: https://mywheeler.net/test/Taskmanager/app/controllers/deleteTask.jsp -->
+<!-- UPDATE: https://mywheeler.net/test/Taskmanager/app/controllers/updateTask.jsp -->
+<!-- each api takes a task_id, the update will also accept name, completed, and description -->
+
+<dom-module id="dev-task-detail">
+	<style>
+
+	</style>
+	<template>
+
+	<iron-ajax
+        id="updateajax"	
+        url="http://localhost:8080/app/controllers/updateTask"
+        handle-as="json"
+        on-response="answer"
+        method="POST"
+        content-type="application/json">
+    </iron-ajax>
+
+	<iron-ajax
+        id="deleteajax"	
+        url="http://localhost:8080/app/controllers/deleteTask"
+        handle-as="json"
+        on-response="answer"
+        method="POST"
+        content-type="application/json">
+    </iron-ajax>
+
+
+<!--- Hidden form for the Bootbox, created to be able to add more inputs--->
+		<div id="hidden-div-task" hidden>
+  			<form class="js-hiddenForm">
+  				<input type="hidden" value="{{taskdetail.task_id}}" id="update-task-id"/>
+    			<div class="form-group">
+    				<label for="update-task-name">Task Name</label>
+    				<input type="text" class="form-control" id="update-task-name">
+  				</div>
+  				<div class="form-group">
+    				<label for="update-task-description">Description</label>
+    				<textarea class="form-control" id="update-task-description" rows="3"></textarea>
+  				</div>
+  				 <div class="form-group">
+    				<label for="update-task-user">User</label>
+    				<input type="text" class="form-control" id="update-task-user">
+  				</div>
+  				<div class="form-group">
+    				<label for="update-task-completed">Completed</label>
+    				<input type="text" class="form-control" id="update-task-completed" aria-describedby="dateHelp">
+    				<small id="dateHelp" class="form-text text-muted">Date: YYYY-MM-DD</small>
+  				</div>
+  			</form>
+		</div>
+
+<!--- Panel for the details--->
+		<div id="panel" class="col-md-8 col-md-offset-2"> 
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">{{taskdetail.name}} - Details</h3>
+			  </div>
+			  <div class="panel-body">
+
+				<h4>Description:</h4>
+				<p>{{taskdetail.description}}</p>
+				<h5>completed: {{taskdetail.completed}}</h5>
+				<h5>user: {{taskdetail.user}}</h5>
+				<br><br>
+				<button type="button" on-tap="updateTask" class="btn btn-primary">Update</button>
+				<button type="button" on-tap="deleteTask" class="btn btn-danger">Delete</button>
+				<button class="btn btn-lg btn-block" on-tap="changePageBack">Close</button>
+
+			  </div>
+			</div>
+		</div>
+	</template>
+
+    <script>
+	    Polymer({
+	        is: 'dev-task-detail',
+	        properties:{
+	        	task:Object
+
+	        },
+
+
+	        updateTask:function(){
+
+	        	//Calling the form to pass the html to the bootbox
+	        	var bootboxHtml = $('#hidden-div-task').html().replace('js-hiddenForm', 'js-bootboxForm');
+
+	        	var taskpage = document.getElementById('mypage')
+	        	
+
+
+	        	bootbox.confirm(bootboxHtml, function(result) {
+
+	        		// Add code here to submit the task to the backend
+	        		var uptaskId = $('#update-task-id', '.js-bootboxForm').val();
+	   				var uptask = $('#update-task-name', '.js-bootboxForm').val();
+    				var updescription = $('#update-task-description', '.js-bootboxForm').val();
+    				var upuser = $('#update-task-user', '.js-bootboxForm').val();
+    				var upcompleted = $('#update-task-completed', '.js-bootboxForm').val();
+    				
+    				var updateajax = document.getElementById('updateajax')
+
+	        		updateajax.body = {
+	        			task_id:uptaskId,
+	        			name:uptask,
+	        			description:updescription,
+  						user:upuser,
+  						completed:upcompleted
+	        		}
+
+	        		// If the action is performed then send the request
+	        		if (result){
+	        			updateajax.generateRequest();
+
+	        		// Change to the next ironpage(TaskList) when the ajax is generated
+	        			taskpage.selectNext();
+	        		}
+	        		
+
+  				});
+
+ 
+
+	        	// fixes issue with bootbox overlay causing text boxes to be covered
+	        	window.setTimeout(function(){
+	        		$(".bootbox").removeAttr("tabIndex");
+	        	}, 200);
+
+	        
+	        },
+
+	       deleteTask:function(){
+	        	
+	        	var taskpage = document.getElementById('mypage')
+	        	
+
+	        	bootbox.confirm("Are you sure ?", function(result) {
+
+	        		// Add code here to submit the task to the backend
+	        		var uptaskId = $('#update-task-id').val();
+    				
+    				var deleteajax = document.getElementById('deleteajax')
+
+	        		deleteajax.body = {
+	        			task_id:uptaskId
+	        		}
+
+					// If the action is performed then send the request
+	        		if (result){
+	        			deleteajax.generateRequest();
+
+	        		// Change to the next ironpage(TaskList) when the ajax is generated
+	        			taskpage.selectNext();
+	        		}
+	        		
+
+  				});
+
+	        	// fixes issue with bootbox overlay causing text boxes to be covered
+	        	window.setTimeout(function(){
+	        		$(".bootbox").removeAttr("tabIndex");
+	        	}, 200);
+
+	        
+	        },
+	        
+	        changePageBack:function(){
+	        	var taskpage = document.getElementById('mypage')
+	        	taskpage.selectNext();
+	        },
+
+	        // Function created to refresh the Task list when the ajax receives a respone
+	       // So we don't have to refresh the website
+	        answer: function(e, request){
+	        		console.log(request.response);
+	        		var getTasks = document.getElementById('datataskajax')
+	        		getTasks.generateRequest();
+	        }
+	        
+	    });
+    </script>
+</dom-module>

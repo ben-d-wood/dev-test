@@ -1,6 +1,10 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<!-- Add to this component the controls to update,and delete the task -->
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<!-- Add to this component the controls to update,and delete the task [DONE]-->
+<!-- Created at the Details component -->
+
 <!-- we would usually call controllers to do this work, however -->
 <!-- use the following urls to hit our external API for this test -->
 <!-- DELETE: https://mywheeler.net/test/Taskmanager/app/controllers/deleteTask.jsp -->
@@ -10,16 +14,24 @@
 	<style>
 
 	</style>
-	<template>
-		<li>{{task.name}}</li>
-	</template>
+	
+<template>
+
+
+	<li class="list-group-item">
+		<a>{{task.name}}</a>
+	</li>
+	
+
+</template>
 
     <script>
 	    Polymer({
 	        is: 'dev-task',
 	        properties:{
 	        	task:Object
-	        }
+	        },
+
 	    });
     </script>
 </dom-module>
