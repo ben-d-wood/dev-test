@@ -17,7 +17,7 @@
 		<!-- Usually this would point to the provider/controller however we are  -->
 		<!-- calling and external api today for funsies -->
 		<iron-ajax auto			
-		url="https://mywheeler.net/test/Taskmanager/app/providers/getTasks.jsp"
+			url="https://mywheeler.net/test/Taskmanager/app/providers/getTasks.jsp?user=Jordan Rand"
     		handle-as="json"
     		on-response="getTasksResponse"
     		debounce-duration="300"
@@ -28,9 +28,11 @@
 			    <h3 class="panel-title">Tasks</h3>
 			  </div>
 			  <div class="panel-body">
-				<template is="dom-repeat" items="{{tasks}}" as="task">
-					<dev-task task="{{task}}"></dev-task>
-				</template>			    
+				  	<ul style="white-space: wrap;">
+						<template is="dom-repeat" items="{{tasks}}" as="task">
+							<dev-task getTasks="{{getTasks}}" task="{{task}}"></dev-task>
+						</template>			 
+					</ul>   
 			  </div>
 			</div>
 		</div>		
@@ -41,8 +43,8 @@
 	        is: 'dev-tasks',
 	        getTasksResponse:function(request){
 	        	var response = request.detail.response;
-	        	this.set("tasks", response.rows);
-	        }
+				this.set("tasks", response.rows);
+			}
 	    });
     </script>
 </dom-module>

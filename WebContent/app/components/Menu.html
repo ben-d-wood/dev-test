@@ -22,7 +22,31 @@
 	        addTask:function(){
 	        	bootbox.prompt("Enter the name of this Task:", function(result){
 	        		console.log(result);
-	        		// Add code here to submit the task to the backend
+	        		const data = {
+						name: result, 
+						description: "",
+						user: 'Jordan Rand' 
+					};
+					async function saveTask(data) {
+						await fetch('http://localhost:3000/app/controllers/saveTask', 
+						{
+							method: "POST",
+							headers: {
+								'Accept': 'application/json',
+								'Content-Type': 'application/json'
+							},
+							body: JSON.stringify(data)
+						})
+						.then((response) => response.json())
+						.then((data) => {
+							console.log('Success:', data);
+						})
+						.catch((error) => {
+							console.error('Error:', error);
+						});
+					}
+					saveTask(data);
+					location.reload();
 	        	});
 
 	        	// fixes issue with bootbox overlay causing text boxes to be covered

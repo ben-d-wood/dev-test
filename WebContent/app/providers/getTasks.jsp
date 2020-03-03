@@ -1,1 +1,7 @@
-/* Replace the contents of this file with the SQL for this backend controller / provider */
+/* All tasks from specific user */
+SELECT * from guest
+WHERE user = "Jordan Rand";
+
+/* One task from specific user */
+SELECT * from guest
+WHERE user = "Jordan Rand" AND task_id = 507;
