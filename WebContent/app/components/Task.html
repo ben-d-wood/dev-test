@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
 
 <!-- Add to this component the controls to update,and delete the task -->
 <!-- we would usually call controllers to do this work, however -->
@@ -8,18 +9,141 @@
 <!-- each api takes a task_id, the update will also accept name, completed, and description -->
 <dom-module id="dev-task">
 	<style>
-
+		/* edit & delete icons for each */
+		.edit-checkbox input[type="checkbox"],
+		.edit-checkbox .checked {
+			display: none;
+		}
+		.edit-checkbox input[type="checkbox"],
+		.edit-checkbox .checked {
+			display: none;
+		}
+		
+		.edit-checkbox input[type="checkbox"]:checked ~ .checked
+		{
+			display: inline-block;
+		}
+		
+		.edit-checkbox input[type="checkbox"]:checked ~ .unchecked
+		{
+			display: none;
+		}
+		/* styles for icons */
+		.edit-icons {
+			cursor: pointer;
+			font-size: 1.5em;
+			padding: 5px;
+			color: #222;
+			transition: color 0.2s;
+		}
+		.edit-icons:hover {
+			color: #777;
+		}
+		.fa-trash:hover {
+			color: red;
+		}
+		.fa-save:hover {
+			color: forestgreen;
+		}
+		.edit-checkbox {
+			padding: 5px 20px;
+			padding-left: 5px;
+		}
+		.task-names {
+			cursor: pointer;
+		}
+		.task-descriptions {
+			display: none;
+			font-size: 1.0em;
+			color: #555;
+			margin-left: 20px;
+		}
+		input[type=submit] {
+			display: none;
+		}
+		
 	</style>
 	<template>
-		<li>{{task.name}}</li>
+		<form action="#">
+			<label class="edit-checkbox">
+				<input type="checkbox" id="edit-{{task.task_id}}" name="{{task.name}}" value="Edit">
+				<i class="far fa-edit unchecked edit-icons" id="edit-icon-{{task.task_id}}" onclick="editTask(this.id)"></i>
+				<i class="far fa-save checked edit-icons" id="save-icon-{{task.task_id}}" onclick="saveTask(this.id)"></i>
+				<i class="fas fa-trash checked edit-icons" id="trash-icon-{{task.task_id}}" onclick="deleteTask(this.id)"></i>
+			</label>
+			<label 
+				for="{{task.name}}" 
+				class="task-names" 
+				title="Click on the task name to see the description."  
+				id="{{task.task_id}}"
+				onclick="onClickDesc(this.id)"
+				 contenteditable="false">
+				 {{task.name}} 
+			</label><br>
+			<span class="task-descriptions" id="desc-{{task.task_id}}"> - {{task.description}}</span>
+			<input type="submit" value="Submit" id="submit-{{task.task_id}}">
+		</form>
 	</template>
-
     <script>
 	    Polymer({
 	        is: 'dev-task',
 	        properties:{
-	        	task:Object
+	        	task: Object
 	        }
-	    });
-    </script>
+		});
+		// get ids for get individual task, includes desc, name
+		const onClickDesc = (id) => {
+			console.log(`id of ${id}`);
+			// toggle description on click
+			let getDesc = document.getElementById(`desc-${id}`);
+		
+			if (getDesc.style.display === "none") {
+				getDesc.style.display = "block";
+			} else {
+				getDesc.style.display = "none";
+			}
+		};
+		// edit function
+		function editTask(id) {
+			// get id, split and leave number
+			const saveId = id;
+			let fixString = id.split('edit-icon-');
+			let getNum = fixString[1];
+			// get id of edit button, get id of current desc
+			let edit = document.getElementById(saveId);
+			let getName = document.getElementById(getNum);
+			let showDesc = document.getElementById(`desc-${getNum}`);
+			// show description & make name of task editable
+			showDesc.style.display = "block";
+			getName.setAttribute("contenteditable", "true");
+			console.log(getName);
+		}
+		// save function
+		function saveTask(id) {
+			// get id, split and leave number
+			const saveId = id;
+			let fixString = id.split('save-icon-');
+			let getNum = fixString[1];
+
+			let saveDesc = document.getElementById(`desc-${getNum}`);
+			saveDesc.style.display = "none";
+			// set attribute to be not be editable anymore, plus get the text
+			let getName = document.getElementById(getNum);
+			getName.setAttribute("contenteditable", "false");
+			let getText = getName.innerText;
+			console.log(getText);
+
+			
+		}
+		// delete function
+		function deleteTask() {
+
+		}
+		// // check to see if save button 
+		// window.addEventListener("keydown", function (e) {
+		// 	if (e.keyCode === 13) {  //checks whether the pressed key is "Enter"
+		// 		saveTask();
+		// 	}
+		// });
+	</script>
 </dom-module>

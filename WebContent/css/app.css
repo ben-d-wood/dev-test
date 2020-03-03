@@ -1,3 +1,7 @@
 /*
-Plac application specific css here
+Place application specific css here
 */
+/* remove annoying highlight on text */
+::selection {
+    background-color: transparent;
+}

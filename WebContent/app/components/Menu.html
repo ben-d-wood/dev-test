@@ -4,7 +4,8 @@
 	<style>
 		nav{
 			background-color: #bbb;
-			height: calc(100vh - 120px);
+			/* changed 120px to 119px, perfect */
+			height: calc(100vh - 119px);
 			padding-top:10px;
 		}
 	</style>
@@ -14,6 +15,18 @@
 				<button class="btn btn-lg btn-block" on-tap="addTask">Add Task</button>
 			</div>
 		</nav>
+		<!-- <iron-ajax 
+			id="ajax"			
+			url="https://mywheeler.net/test/Taskmanager/app/controllers/createTask.jsp"	
+			handle-as="json",
+			on-response="createTask"
+			content-type="application/json"
+			params='{}'
+			debounce-duration="300">
+		</iron-ajax> -->
+		<!-- <template>
+		 <create-task task="{{task}}" id="create-task"></create-task> -->
+		<!-- </template> -->
 	</template>
 
     <script>
@@ -21,11 +34,23 @@
 	        is: 'dev-menu',
 	        addTask:function(){
 	        	bootbox.prompt("Enter the name of this Task:", function(result){
-	        		console.log(result);
-	        		// Add code here to submit the task to the backend
-	        	});
-
-	        	// fixes issue with bootbox overlay causing text boxes to be covered
+					// Add code here to submit the task to the backend					
+					if (!result) {
+						console.log("That wasn't a task!");
+					} else {
+						let name = result;
+						// hit the endpoint to create a task
+						console.log('create task');
+						let url = `https://mywheeler.net/test/Taskmanager/app/controllers/createTask.jsp?name=${name}`;
+						$.ajax({url: url, success: function(result){
+							console.log('result', result);
+							location.reload();
+						}});
+					}
+				});
+				function isEmpty(property) {
+					return (property === null || property === "" || typeof property === "undefined");
+				}
 	        	window.setTimeout(function(){
 	        		$(".bootbox").removeAttr("tabIndex");
 	        	}, 200);

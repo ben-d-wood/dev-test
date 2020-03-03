@@ -6,21 +6,29 @@
 <dom-module id="dev-tasks">
 	<style>
 		#panel{
-			margin-top:20px;
-			height:50vh;
+			margin-top: 20px;
+			height: 50vh;
 		}
 		.panel{
 			height: 100%;
+		}
+		/* this was added so I didn't have to scroll forever because someone put over 400 tasks in the list */
+		.panel-body {
+			overflow: scroll;
+    		height: calc(100% - 38px);
 		}
 	</style>
 	<template>
 		<!-- Usually this would point to the provider/controller however we are  -->
 		<!-- calling and external api today for funsies -->
+
+		<!-- url endpoint doesn't work because "TaskManager" needed to be changed "Taskmanager" in the url given -->
+		<!-- like so, https://mywheeler.net/test/Taskmanager/app/providers/getTasks.jsp -->
 		<iron-ajax auto			
-			url="https://mywheeler.net/test/TaskManager/app/providers/getTasks.jsp"
+			url="https://mywheeler.net/test/Taskmanager/app/providers/getTasks.jsp"	
     		handle-as="json"
     		on-response="getTasksResponse"
-    		debounce-duration="300"
+			debounce-duration="300"
 		></iron-ajax>
 		<div id="panel" class="col-md-6 col-md-offset-2"> 
 			<div class="panel panel-default">
@@ -41,7 +49,8 @@
 	        is: 'dev-tasks',
 	        getTasksResponse:function(request){
 	        	var response = request.detail.response;
-	        	this.set("tasks", response.rows);
+				this.set("tasks", response.rows);
+				console.log(response);
 	        }
 	    });
     </script>
