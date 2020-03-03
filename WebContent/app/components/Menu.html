@@ -10,13 +10,14 @@
   </style>
   <template>
     <iron-ajax
-      auto="false"
+      auto
       url="../controllers/saveTask.jsp"
       handle-as="json"
       method="POST"
       request="postTask"
       debounce-duration="300"
     ></iron-ajax>
+    <!-- instead of a request calling a function might be able to use body='{"name":{{result}}, "description": "task menu", "user": "Glen Larsen"}' -->
     <nav>
       <div class="col-xs-12">
         <button class="btn btn-lg btn-block" on-tap="addTask">

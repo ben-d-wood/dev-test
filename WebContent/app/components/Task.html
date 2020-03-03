@@ -15,20 +15,23 @@
   </style>
   <template>
     <iron-ajax
-      auto="false"
+      auto
       url="https://mywheeler.net/test/Taskmanager/app/controllers/deleteTask.jsp"
       handle-as="json"
       method="DELETE"
+      body='{"task_id":{{task.task_id}}}'
       request="deleteTasksRequest"
       debounce-duration="300"
+      content-type="application/json"
     ></iron-ajax>
     <iron-ajax
-      auto="false"
+      auto
       url="https://mywheeler.net/test/Taskmanager/app/controllers/updateTask.jsp"
       handle-as="json"
       method="PUT"
-      request="updateTasksRequest"
+      request="updateTask"
       debounce-duration="300"
+      content-type="application/json"
     ></iron-ajax>
     <li>
       {{task.name}}
@@ -47,11 +50,41 @@
       deleteTasksRequest: function(task_id) {
         console.log(task_id);
         //write a way to capture task_id and send to the api
-        // what event calls these functions?
+        bootbox.confirm({
+          message: "Are you sure you want to delete this task?",
+          buttons: {
+            confirm: {
+              label: "Yes",
+              className: "btn-success"
+            },
+            cancel: {
+              label: "No",
+              className: "btn-danger"
+            }
+          },
+          callback: function(result) {
+            console.log("delete confirmation: " + result);
+            if (result === "true") {
+              return task_id;
+            }
+          }
+        });
       },
-      updateTasksRequest: function(task_id) {
-        console.log(task_id);
-
+      updateTasksRequest: function() {
+        bootbox.prompt("Enter the new name of this Task:", function(result) {
+          console.log(result);
+          let json = {
+            name: result,
+            description: "updated task: " + result,
+            user: "Glen Larsen"
+          };
+          updateTask = function(event) {
+            console.log("updateTask function event:");
+            console.log(event);
+            return event;
+          };
+          updateTask(json);
+        });
         //write the update capture for task_id, name, completed, description
       }
     });
