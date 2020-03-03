@@ -11,11 +11,12 @@
   </style>
   <template>
     <iron-ajax
-	  url="https://mywheeler.net/test/Taskmanager/app/controllers/createTask.jsp"
-	  auto="{{isParamsReady}}"
+      id="addTask"
+      url="https://mywheeler.net/test/Taskmanager/app/controllers/createTask.jsp"
       handle-as="json"
-	  debounce-duration="300"
-    ></iron-ajax>
+      on-response="updateTaskResponse"
+      debounce-duration="300">
+    </iron-ajax>
     <nav>
       <div class="col-xs-12">
         <button class="btn btn-lg btn-block" on-tap="addTask">Add Task</button>
@@ -25,31 +26,32 @@
 
   <script>
     Polymer({
-      is: "dev-menu", properties: {
-		  isParamsReady: {
-			  type: Boolean,
-			  computed: '_isParamsReady(result)'
-		  }
-	  },
-      addTask: function() {
+      is: "dev-menu",
+       addTask: function() {
         bootbox.prompt("Enter the name of this Task:", function(result) {
-		  console.log(result);
-		  $('iron-ajax').params = {
-			  name: result,
-			  description: "adding a description",
-			  user: "test3"
-		  }
-		  $('iron-ajax').generateRequest()
-        });
+          console.log(result)
+          this.$.addTask.params = {
+            'name': name,
+            'description': "added description",
+            'user': "test3"
+          };
+          this.$.addTask.generateRequest();
+        })
 
-        // fixes issue with bootbox overlay causing text boxes to be covered
+
+          //  fixes issue with bootbox overlay causing text boxes to be covered
         window.setTimeout(function() {
           $(".bootbox").removeAttr("tabIndex");
         }, 200);
-	  },
-	  _isParamsReady: function(result){
-		return result != null
-	  }
+      
+      },       
+        updateTaskResponse: function(request){
+          var response = request.detail.response;
+                     if(response.successful){
+                           bootbox.alert('Task created!');
+        }}
+      
+       
     });
   </script>
 </dom-module>
