@@ -1,35 +1,55 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html" />
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html" />
 
 <dom-module id="dev-menu">
-	<style>
-		nav{
-			background-color: #bbb;
-			height: calc(100vh - 120px);
-			padding-top:10px;
-		}
-	</style>
-	<template>
-		<nav>
-			<div class="col-xs-12">
-				<button class="btn btn-lg btn-block" on-tap="addTask">Add Task</button>
-			</div>
-		</nav>
-	</template>
+  <style>
+    nav {
+      background-color: #bbb;
+      height: calc(100vh - 120px);
+      padding-top: 10px;
+    }
+  </style>
+  <template>
+    <iron-ajax
+	  url="https://mywheeler.net/test/Taskmanager/app/controllers/createTask.jsp"
+	  auto="{{isParamsReady}}"
+      handle-as="json"
+	  debounce-duration="300"
+    ></iron-ajax>
+    <nav>
+      <div class="col-xs-12">
+        <button class="btn btn-lg btn-block" on-tap="addTask">Add Task</button>
+      </div>
+    </nav>
+  </template>
 
-    <script>
-	    Polymer({
-	        is: 'dev-menu',
-	        addTask:function(){
-	        	bootbox.prompt("Enter the name of this Task:", function(result){
-	        		console.log(result);
-					// Add code here to submit the task to the backend
-	        	});
+  <script>
+    Polymer({
+      is: "dev-menu", properties: {
+		  isParamsReady: {
+			  type: Boolean,
+			  computed: '_isParamsReady(result)'
+		  }
+	  },
+      addTask: function() {
+        bootbox.prompt("Enter the name of this Task:", function(result) {
+		  console.log(result);
+		  $('iron-ajax').params = {
+			  name: result,
+			  description: "adding a description",
+			  user: "test3"
+		  }
+		  $('iron-ajax').generateRequest()
+        });
 
-	        	// fixes issue with bootbox overlay causing text boxes to be covered
-	        	window.setTimeout(function(){
-	        		$(".bootbox").removeAttr("tabIndex");
-	        	}, 200);
-	        }
-	    });
-    </script>
+        // fixes issue with bootbox overlay causing text boxes to be covered
+        window.setTimeout(function() {
+          $(".bootbox").removeAttr("tabIndex");
+        }, 200);
+	  },
+	  _isParamsReady: function(result){
+		return result != null
+	  }
+    });
+  </script>
 </dom-module>

@@ -1,6 +1,6 @@
-INSERT INTO guest.Task (name, description, user)
-VALUES('insert into test', 'test', 'Rob K')
+INSERT INTO Task (name, description, user)
+VALUES('insert into test', 'test', 'Rob')
 
 <!-- being dynamic: 
-INSERT INTO guest.Task (name, description, user)
+INSERT INTO Tasks (name, description, user)
 VALUES ($1, $2, $3) -->

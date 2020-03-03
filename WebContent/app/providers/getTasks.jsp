@@ -1,6 +1,6 @@
-SELECT * FROM guest.Tasks
+SELECT * FROM Tasks
 WHERE user = 'Rob K'
 
 <!-- dynamic: 
-SELECT * FROM guest.Tasks
+SELECT * FROM Tasks
 WHERE user = $1 -->

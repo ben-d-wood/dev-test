@@ -18,7 +18,8 @@
 		<!-- calling and external api today for funsies -->
 		<iron-ajax auto			
 		url="https://mywheeler.net/test/Taskmanager/app/providers/getTasks.jsp"
-    		handle-as="json"
+			handle-as="json"
+			params='{{_getParams()}}'
     		on-response="getTasksResponse"
     		debounce-duration="300"
 		></iron-ajax>
@@ -38,7 +39,10 @@
 
     <script>
 	    Polymer({
-	        is: 'dev-tasks',
+			is: 'dev-tasks',
+			_getParams: function(){
+				return {'user': "test3"}
+			},
 	        getTasksResponse:function(request){
 	        	var response = request.detail.response;
 				console.log(response)
