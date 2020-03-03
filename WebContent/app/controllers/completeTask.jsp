@@ -17,7 +17,6 @@
 
     <sql:update dataSource="${snapshot}" var="count">
       UPDATE Test.guest.Tasks SET WHERE user = 'Glen Larsen'
-      <sql:param value="${empId}" />
     </sql:update>
   </body>
 </html>

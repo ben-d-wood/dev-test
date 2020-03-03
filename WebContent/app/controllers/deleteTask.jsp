@@ -17,7 +17,6 @@ uri="http://java.sun.com/jsp/jstl/sql" prefix = "sql"%>
 
     <sql:update dataSource="${snapshot}" var="count">
       DELETE FROM Test.guest.Tasks WHERE task_id = ?
-      <sql:param value="${empId}" />
     </sql:update>
   </body>
 </html>
