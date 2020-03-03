@@ -53,7 +53,7 @@
 			cursor: pointer;
 		}
 		.task-descriptions {
-			display: none;
+			display: block;
 			font-size: 1.0em;
 			color: #555;
 			margin-left: 20px;
@@ -128,12 +128,21 @@
 			let saveDesc = document.getElementById(`desc-${getNum}`);
 			saveDesc.style.display = "none";
 			// set attribute to be not be editable anymore, plus get the text
-			let getName = document.getElementById(getNum);
-			getName.setAttribute("contenteditable", "false");
-			let getText = getName.innerText;
+			let getNameId = document.getElementById(getNum);
+			getNameId.setAttribute("contenteditable", "false");
+			let getText = getNameId.innerText;
 			console.log(getText);
-
-			
+		
+			// update and save the task
+			// hit the endpoint to update a task
+			bootbox.alert("Task has been successfully updated!", function(){ 
+				console.log('updated task');
+				let url = `https://mywheeler.net/test/Taskmanager/app/controllers/updateTask.jsp?task_id=${getNum}&name=${getText}`;
+				$.ajax({url: url, success: function(result){
+					console.log('result', result);
+					location.reload();
+				}});
+			});
 		}
 		// delete function
 		function deleteTask() {

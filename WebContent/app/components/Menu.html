@@ -15,6 +15,7 @@
 				<button class="btn btn-lg btn-block" on-tap="addTask">Add Task</button>
 			</div>
 		</nav>
+		<!-- not a lot of documentation on iron-ajax -->
 		<!-- <iron-ajax 
 			id="ajax"			
 			url="https://mywheeler.net/test/Taskmanager/app/controllers/createTask.jsp"	
@@ -35,7 +36,7 @@
 	        addTask:function(){
 	        	bootbox.prompt("Enter the name of this Task:", function(result){
 					// Add code here to submit the task to the backend					
-					if (!result) {
+					if (isEmpty(result)) {
 						console.log("That wasn't a task!");
 					} else {
 						let name = result;
@@ -44,7 +45,9 @@
 						let url = `https://mywheeler.net/test/Taskmanager/app/controllers/createTask.jsp?name=${name}`;
 						$.ajax({url: url, success: function(result){
 							console.log('result', result);
-							location.reload();
+							bootbox.alert("Task has been successfully entered!", function(){ 	
+								location.reload();
+							});
 						}});
 					}
 				});

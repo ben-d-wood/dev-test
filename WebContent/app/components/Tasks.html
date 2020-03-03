@@ -17,6 +17,10 @@
 			overflow: scroll;
     		height: calc(100% - 38px);
 		}
+		#instructions {
+			font-size: 0.8em;
+			color: #777;
+		}
 	</style>
 	<template>
 		<!-- Usually this would point to the provider/controller however we are  -->
@@ -33,7 +37,8 @@
 		<div id="panel" class="col-md-6 col-md-offset-2"> 
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			    <h3 class="panel-title">Tasks</h3>
+				<h3 class="panel-title">Tasks</h3>
+				<span id="instructions">Click on the task name to hide/show task descriptions.</span>
 			  </div>
 			  <div class="panel-body">
 				<template is="dom-repeat" items="{{tasks}}" as="task">
@@ -52,6 +57,6 @@
 				this.set("tasks", response.rows);
 				console.log(response);
 	        }
-	    });
+		});
     </script>
 </dom-module>
