@@ -11,7 +11,29 @@
 
 	</style>
 	<template>
-		<li>{{task.name}}</li>
+		<iron-ajax
+            id = "updateAjax"
+            method = "post"
+            url="https://mywheeler.net/test/Taskmanager/app/controllers/updateTask.jsp"
+    		handle-as="json"
+    		on-response="postUpdated"
+    		debounce-duration="300"
+        ></iron-ajax>
+        
+		<iron-ajax
+            id = "deleteAjax"
+            method = "post"
+            url="https://mywheeler.net/test/Taskmanager/app/controllers/deleteTask.jsp"
+    		handle-as="json"
+    		on-response="postUpdated"
+    		debounce-duration="300"
+		></iron-ajax>
+
+		<li>
+            {{task.name}}
+            <button class="btn btn-sm" on-tap="updateTask">Update</button>
+            <button class="btn btn-sm" on-tap="deleteTask">Delete</button>
+        </li>
 	</template>
 
     <script>
@@ -19,7 +41,80 @@
 	        is: 'dev-task',
 	        properties:{
 	        	task:Object
-	        }
+	        },
+
+            updateTask: function() {
+                var form = $("<form id='editTaskForm' action=''>\
+                    Enter the Task name:<input type='text' name='task_name' /><br/>\
+                    Enter the description:<input type='text' name='task_description' />\
+                    </form>");
+
+
+                var taskName = form.find('input[name=task_name]');
+                var taskDescription = form.find('input[name=task_description]');
+
+                let task = this.task
+
+                taskName.val(this.task.name);
+                taskDescription.val(this.task.description);
+
+                let ajaxRequest = this.$.updateAjax
+
+                bootbox.alert(form,function(){
+
+                    console.log(ajaxRequest);
+                    console.log(ajaxRequest.params);
+                    
+                    ajaxRequest.params = {
+                        "name": taskName.val(),
+                        "description": taskDescription.val(),
+                        "user": task.user,
+                        "task_id": task.task_id
+                    }
+
+                    console.log(taskName.val());
+                    console.log(ajaxRequest.params);
+                    console.log(ajaxRequest.queryString);
+
+                    ajaxRequest.generateRequest();
+
+                });
+
+	        	// fixes issue with bootbox overlay causing text boxes to be covered
+	        	window.setTimeout(function(){
+	        		$(".bootbox").removeAttr("tabIndex");
+	        	}, 200);
+	        },
+
+            deleteTask: function() {
+
+                let task = this.task
+
+                let ajaxRequest = this.$.deleteAjax
+
+                bootbox.confirm("Are you sure?",function(result){
+
+                    if (result) {
+
+                        ajaxRequest.params = {
+                            "task_id": task.task_id
+                        }
+
+                        ajaxRequest.generateRequest();
+                    }
+
+                });
+
+	        	// fixes issue with bootbox overlay causing text boxes to be covered
+	        	window.setTimeout(function(){
+	        		$(".bootbox").removeAttr("tabIndex");
+	        	}, 200);
+	        },
+
+            postUpdated: function() {
+                document.getElementById('getTasksAjax').generateRequest();
+            }
+
 	    });
     </script>
 </dom-module>

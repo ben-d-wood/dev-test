@@ -9,6 +9,15 @@
 		}
 	</style>
 	<template>
+		<iron-ajax
+				id = "createAjax"
+				method = "post"
+                url="https://mywheeler.net/test/Taskmanager/app/controllers/createTask.jsp"
+                params = '{"name":"", "description":"", "user": "Jed Flynn"}'
+    		handle-as="json"
+    		on-response="postCreated"
+    		debounce-duration="300"
+		></iron-ajax>
 		<nav>
 			<div class="col-xs-12">
 				<button class="btn btn-lg btn-block" on-tap="addTask">Add Task</button>
@@ -20,16 +29,30 @@
 	    Polymer({
 	        is: 'dev-menu',
 	        addTask:function(){
-	        	bootbox.prompt("Enter the name of this Task:", function(result){
-	        		console.log(result);
-	        		// Add code here to submit the task to the backend
-	        	});
+                var form = $("<form id='newTaskForm' action=''>\
+                    Enter the Task name:<input type='text' name='task_name' /><br/>\
+                    Enter the description:<input type='text' name='task_description' />\
+                    </form>");
+                bootbox.alert(form,function(){
+                    var taskName = form.find('input[name=task_name]').val();
+                    var taskDescription = form.find('input[name=task_description]').val();
+
+                    let ajaxRequest = document.getElementById('createAjax');
+                    ajaxRequest.params.name = taskName;
+                    ajaxRequest.params.description = taskDescription;
+
+                    ajaxRequest.generateRequest();
+                });
 
 	        	// fixes issue with bootbox overlay causing text boxes to be covered
 	        	window.setTimeout(function(){
 	        		$(".bootbox").removeAttr("tabIndex");
 	        	}, 200);
-	        }
+	        },
+
+					postCreated: function() {
+							document.getElementById('getTasksAjax').generateRequest();
+					}
 	    });
     </script>
 </dom-module>
