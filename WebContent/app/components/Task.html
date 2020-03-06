@@ -3,22 +3,100 @@
 <!-- Add to this component the controls to update,and delete the task -->
 <!-- we would usually call controllers to do this work, however -->
 <!-- use the following urls to hit our external API for this test -->
+
+<!-- 404 not found -->
 <!-- DELETE: https://mywheeler.net/test/Taskmanager/app/controllers/deleteTask.jsp -->
+
+<!-- Complete -->
 <!-- UPDATE: https://mywheeler.net/test/Taskmanager/app/controllers/updateTask.jsp -->
 <!-- each api takes a task_id, the update will also accept name, completed, and description -->
 <dom-module id="dev-task">
 	<style>
+		.true {
+			text-decoration: line-through;
+		}
+		.x-button {
+			transition: 1s;
+			margin-left: 10px;
+		}
+		.x-button:hover {
+			color: red;
+		}
 
+		.right {
+			flex: 1;
+			margin: 0;
+		}
 	</style>
+
 	<template>
-		<li>{{task.name}}</li>
+		<div style="display: flex; flex-direction: row; justify-content: space-between; align-content: center;">
+			<li style="flex: 2">{{task.task_id}}, {{task.name}}</li>
+			<!-- delete doesn't work -->
+			<!-- <button class="x-button right" on-click="deleteTask" task-id="{{task.task_id}}">Delete</button> -->
+			<p class="right">{{task.completed}}</p>
+			<input class="right" type="checkbox" on-click="completeTask" checked="{{task.completed}}" value="{{task.task_id}}">
+		</div>
 	</template>
 
     <script>
 	    Polymer({
-	        is: 'dev-task',
+			is: 'dev-task',
+			completeTask: async function(e) {
+				// e.target.style='text-decoration: line-through'
+				// Won't let me send NULL, null or '' to un-complete a task
+				const checked = e.target.checked
+				const task_id = e.target.value
+				const data = {
+					task_id: task_id,
+					completed: checked ? new Date() : 'NULL',
+					user: "Jordan Rand"
+				};
+				async function completeTask(data) {
+					await fetch('http://localhost:3000/app/controllers/completeTask', 
+					{
+						method: "PUT",
+						headers: {
+							'Accept': 'application/json',
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(data)
+					})
+					.then((response) => response.json())
+					.catch((error) => {
+						console.error('Error:', error);
+					});
+				}
+				completeTask(data);
+				location.reload();
+			},
+			// not working due to 404
+			deleteTask: function(e) {
+				const task_id = e.target.task-id
+				const data = {
+					task_id: task_id,
+					user: "Jordan Rand"
+				};
+				async function deleteTask(data) {
+					await fetch('http://localhost:3000/app/controllers/deleteTask', 
+					{
+						method: "DELETE",
+						headers: {
+							'Accept': 'application/json',
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(data)
+					})
+					.then((response) => response.json())
+					.catch((error) => {
+						console.error('Error:', error);
+					});
+				}
+				deleteTask(data);
+			},
 	        properties:{
-	        	task:Object
+				task:Object,
+				getTasks:Function,
 	        }
 	    });
     </script>
