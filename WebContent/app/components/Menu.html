@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 
 <dom-module id="dev-menu">
 	<style>
@@ -9,6 +10,34 @@
 		}
 	</style>
 	<template>
+		
+		
+		<iron-ajax
+              id="datajax"	
+              url="http://localhost:8080/app/controllers/createTask"
+              handle-as="json"
+              on-response="answer"
+              method="POST"
+              content-type="application/json"
+              >
+    	</iron-ajax>
+
+
+    <!--- Hidden form for the Bootbox, created to be able to add "Description"--->
+    	<div id="hidden-div" hidden>
+  			<form class="js-hiddenForm">
+    			<div class="form-group">
+    				<label for="input-name-task">Task Name</label>
+    				<input type="text" class="form-control" id="input-name-task">
+  				</div>
+    			<div class="form-group">
+    				<label for="input-description">Description</label>
+    				<textarea class="form-control" id="input-description" rows="3"></textarea>
+  				</div>
+  			</form>
+		</div>
+
+
 		<nav>
 			<div class="col-xs-12">
 				<button class="btn btn-lg btn-block" on-tap="addTask">Add Task</button>
@@ -20,16 +49,47 @@
 	    Polymer({
 	        is: 'dev-menu',
 	        addTask:function(){
-	        	bootbox.prompt("Enter the name of this Task:", function(result){
-	        		console.log(result);
+	        	
+	        	//Calling the form to pass the html to the bootbox
+	        	var bootboxHtml = $('#hidden-div').html().replace('js-hiddenForm', 'js-bootboxForm');
+
+	        	bootbox.confirm(bootboxHtml, function(result) {
 	        		// Add code here to submit the task to the backend
-	        	});
+	   				var vtask = $('#input-name-task', '.js-bootboxForm').val();
+    				var vdescription = $('#input-description', '.js-bootboxForm').val();
+
+    				var datajax = document.getElementById('datajax')
+
+	        		datajax.body = {
+	        			name:vtask,
+	        			description:vdescription,
+  						user:"byronlara5"
+	        		}
+
+	        		// If the action is performed then send the request
+	        		if (result){
+	        			datajax.generateRequest();
+	        		}
+	        		
+
+  				});
+
 
 	        	// fixes issue with bootbox overlay causing text boxes to be covered
 	        	window.setTimeout(function(){
 	        		$(".bootbox").removeAttr("tabIndex");
 	        	}, 200);
+	        },
+
+	       // Function created to refresh the Task list when the ajax receives a respone
+	       // So we don't have to refresh the website
+	        answer: function(e, request){
+	        		console.log(request.response);
+	        		var getTasks = document.getElementById('datataskajax')
+	        		getTasks.generateRequest();
+
 	        }
+
 	    });
     </script>
 </dom-module>

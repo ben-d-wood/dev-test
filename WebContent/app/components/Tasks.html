@@ -1,7 +1,15 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html"/>
+
+
+
 
 <link rel="import" href="Task.html">
+<!-- Importing the new component -->
+<link rel="import" href="TaskDetails.html">
+
+
 
 <dom-module id="dev-tasks">
 	<style>
@@ -16,33 +24,62 @@
 	<template>
 		<!-- Usually this would point to the provider/controller however we are  -->
 		<!-- calling and external api today for funsies -->
-		<iron-ajax auto			
-		url="https://mywheeler.net/test/Taskmanager/app/providers/getTasks.jsp"
+		<iron-ajax auto
+		url="http://localhost:8080/app/providers/getTasks"
+		id="datataskajax"
     		handle-as="json"
-    		on-response="getTasksResponse"
+    		on-response="getTasksResponse"    
     		debounce-duration="300"
 		></iron-ajax>
-		<div id="panel" class="col-md-6 col-md-offset-2"> 
+
+
+<!-- Using iron pagas to change between Task and Task Details -->
+	<iron-pages id="mypage" selected="0">
+
+		<div id="panel" class="col-md-8 col-md-offset-2" style="height: 49rem;"> 
 			<div class="panel panel-default">
 			  <div class="panel-heading">
 			    <h3 class="panel-title">Tasks</h3>
 			  </div>
 			  <div class="panel-body">
 				<template is="dom-repeat" items="{{tasks}}" as="task">
-					<dev-task task="{{task}}"></dev-task>
-				</template>			    
+					<dev-task id="{{task.task_id}}" on-tap="changePage" task="{{task}}"></dev-task>
+				</template>
 			  </div>
 			</div>
-		</div>		
-	</template>
+		</div>
 
+<!-- Passing the objects to the component with {{taskDetail}} -->
+		<div id="taskdetails">
+			<dev-task-detail taskdetail="{{taskdetail}}"></dev-task-detail>
+		</div>
+
+	</iron-pages>
+
+
+	</template>
     <script>
 	    Polymer({
 	        is: 'dev-tasks',
 	        getTasksResponse:function(request){
 	        	var response = request.detail.response;
-	        	this.set("tasks", response.rows);
+	        	console.log(response)
+	        	this.set("tasks", response);
+	        },
+
+	        //This function sets the properties {{taskDetail}} when the event is performed
+	        changePage:function(oEvent){
+	        	var taskpage = document.getElementById('mypage')
+
+	        	var task = oEvent.model.get('task');
+	        	
+
+	        	this.set("taskdetail", task)
+	        	//When the properties of the Details are set then change the page
+	        	taskpage.selectNext();
 	        }
+
+
 	    });
     </script>
 </dom-module>

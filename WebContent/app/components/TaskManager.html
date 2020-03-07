@@ -5,6 +5,7 @@
 
 <link rel="import" href="Tasks.html">
 
+
 <dom-module id="dev-task-manager">
 	<style>
 		#panel{
@@ -19,6 +20,7 @@
 	<template> 
 		<app-location route="{{route}}" use-hash-as-path></app-location>
 		<app-route route="{{route}}" data="{{data}}" tail="{{subRoute}}" pattern="/:page"></app-route>
+
 		<iron-pages id="views" selected="{{data.page}}" attr-for-selected="id" fallback-selection="tasks">
 			<dev-tasks id="tasks"></dev-tasks>
 		</iron-pages>
