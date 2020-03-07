@@ -1,48 +1,50 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html" />
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html" />
 
-<link rel="import" href="Task.html">
+<link rel="import" href="Task.html" />
 
 <dom-module id="dev-tasks">
-	<style>
-		#panel{
-			margin-top:20px;
-			height:50vh;
-		}
-		.panel{
-			height: 100%;
-		}
-	</style>
-	<template>
-		<!-- Usually this would point to the provider/controller however we are  -->
-		<!-- calling and external api today for funsies -->
-		<iron-ajax auto			
-		url="https://mywheeler.net/test/Taskmanager/app/providers/getTasks.jsp"
-    		handle-as="json"
-    		on-response="getTasksResponse"
-    		debounce-duration="300"
-		></iron-ajax>
-		<div id="panel" class="col-md-6 col-md-offset-2"> 
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-			    <h3 class="panel-title">Tasks</h3>
-			  </div>
-			  <div class="panel-body">
-				<template is="dom-repeat" items="{{tasks}}" as="task">
-					<dev-task task="{{task}}"></dev-task>
-				</template>			    
-			  </div>
-			</div>
-		</div>		
-	</template>
+  <style>
+    #panel {
+      margin-top: 20px;
+      height: 50vh;
+    }
+    .panel {
+      height: 100%;
+    }
+  </style>
+  <template>
+    <!-- Usually this would point to the provider/controller however we are  -->
+    <!-- calling and external api today for funsies -->
+    <iron-ajax
+      auto
+      url="https://mywheeler.net/test/Taskmanager/app/providers/getTasks.jsp"
+      handle-as="json"
+      on-response="getTasksResponse"
+      debounce-duration="300"
+    ></iron-ajax>
+    <div id="panel" class="col-md-6 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Tasks</h3>
+        </div>
+        <div class="panel-body">
+          <template is="dom-repeat" items="{{tasks}}" as="task">
+            <dev-task task="{{task}}"></dev-task>
+          </template>
+        </div>
+      </div>
+    </div>
+  </template>
 
-    <script>
-	    Polymer({
-	        is: 'dev-tasks',
-	        getTasksResponse:function(request){
-	        	var response = request.detail.response;
-	        	this.set("tasks", response.rows);
-	        }
-	    });
-    </script>
+  <script>
+    Polymer({
+      is: "dev-tasks",
+      getTasksResponse: function(request) {
+        var response = request.detail.response;
+        console.log(response);
+        this.set("tasks", response.rows);
+      }
+    });
+  </script>
 </dom-module>

@@ -1,49 +1,49 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html" />
 
 <dom-module id="dev-application">
-	<style>
-		h1{
-			text-align:center;
-		}
-		ol{
-			margin-bottom:0px;
-		}
-		.navbar{
-			margin-bottom:0px;
-			line-height: 30px;
-		}
-		#left-nav{
-			padding:0px;
-		}
-	</style>
-	<template>
-		<h1>{{name}}</h1>
-		<nav class="navbar navbar-default">
-		  <div class="container-fluid">
-		    <div class="navbar-header">
-				<ol class="breadcrumb">
-					<template is="dom-repeat" items="{{breadcrumbs}}" as="crumb">
-						<li>{{crumb}}</li>
-					</template>
-				</ol>
-		    </div>
-		  </div>
-		</nav>		
-		<div id="left-nav" class="col-md-2"><content select=".nav-left"/></div>
-		<div class="col-md-10"><content select=".app-content"/></div>
-	</template>
+  <style>
+    h1 {
+      text-align: center;
+    }
+    ol {
+      margin-bottom: 0px;
+    }
+    .navbar {
+      margin-bottom: 0px;
+      line-height: 30px;
+    }
+    #left-nav {
+      padding: 0px;
+    }
+  </style>
+  <template>
+    <h1>{{name}}</h1>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <ol class="breadcrumb">
+            <template is="dom-repeat" items="{{breadcrumbs}}" as="crumb">
+              <li>{{crumb}}</li>
+            </template>
+          </ol>
+        </div>
+      </div>
+    </nav>
+    <div id="left-nav" class="col-md-2"><content select=".nav-left" /></div>
+    <div class="col-md-10"><content select=".app-content" /></div>
+  </template>
 
-    <script>
-	    Polymer({
-	        is: 'dev-application',
-	        properties:{
-	        	name:String,
-	        	path:String,
-	        	breadcrumbs:Array
-	        },
-	        attached:function(){
-	        	this.set("breadcrumbs", ["Home"].concat(this.path.split("/")))
-	        }
-	    });
-    </script>
+  <script>
+    Polymer({
+      is: "dev-application",
+      properties: {
+        name: String,
+        path: String,
+        breadcrumbs: Array
+      },
+      attached: function() {
+        this.set("breadcrumbs", ["Home"].concat(this.path.split("/")));
+      }
+    });
+  </script>
 </dom-module>
